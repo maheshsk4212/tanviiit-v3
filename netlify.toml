@@ -1,0 +1,9 @@
+# This site is built with basePath "/v3", so every page lives under /v3.
+# Send the bare address there, so the site also works as a standalone
+# Netlify site. Build settings are detected by Netlify (Next.js).
+
+[[redirects]]
+  from = "/"
+  to = "/v3"
+  status = 302
+  force = true
