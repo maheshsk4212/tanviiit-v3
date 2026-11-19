@@ -1,0 +1,290 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Tanvi IT design tokens.
+ *
+ * Ink and signal come from the client's own mark (charcoal lettering, amber
+ * "IT"). Everything else is a cool neutral so photographs and the amber carry
+ * the colour. The amber is a fill, never text on white: it fails contrast
+ * there, so links on light grounds use `federal`.
+ */
+@theme inline {
+  --color-ink: #0a1624;
+  --color-ink-2: #11243a;
+  --color-ink-3: #1b3350;
+  --color-signal: #f6a417;
+  --color-signal-deep: #d98805;
+  --color-federal: #1a4b86;
+  --color-mist: #f1f4f7;
+  --color-line: #d9e0e7;
+  --color-steel: #54637a;
+
+  --font-sans: var(--font-public), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-archivo), var(--font-public), ui-sans-serif, sans-serif;
+  --font-heading: var(--font-display);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+
+  --animate-rise: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-settle: settle 2.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-panel: panel 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade: fade 0.5s ease-out both;
+
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(1.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes settle {
+    from {
+      transform: scale(1.09);
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes panel {
+    from {
+      opacity: 0;
+      transform: translateY(-0.4rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a1624;
+  --card: #ffffff;
+  --card-foreground: #0a1624;
+  --popover: #ffffff;
+  --popover-foreground: #0a1624;
+  --primary: #0a1624;
+  --primary-foreground: #ffffff;
+  --secondary: #f1f4f7;
+  --secondary-foreground: #0a1624;
+  --muted: #f1f4f7;
+  --muted-foreground: #54637a;
+  --accent: #f1f4f7;
+  --accent-foreground: #0a1624;
+  --destructive: #b42318;
+  --border: #d9e0e7;
+  --input: #d9e0e7;
+  --ring: #1a4b86;
+  --radius: 0.5rem;
+  --gutter: clamp(1.25rem, 4vw, 3.5rem);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    scroll-padding-top: 6.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-background text-foreground;
+    text-rendering: optimizeLegibility;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-federal);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  .on-dark :focus-visible {
+    outline-color: var(--color-signal);
+  }
+  ::selection {
+    background: var(--color-signal);
+    color: var(--color-ink);
+  }
+}
+
+@layer components {
+  /* One content width and one gutter for every section, so edges line up. */
+  .wrap {
+    width: 100%;
+    max-width: 84rem;
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  /* Archivo, set slightly wide: the engineered, plate-lettering feel. */
+  .display {
+    font-family: var(--font-display);
+    font-stretch: 108%;
+    font-weight: 600;
+    letter-spacing: -0.022em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  .h-section {
+    font-family: var(--font-display);
+    font-stretch: 108%;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.06;
+    font-size: clamp(2rem, 1.3rem + 2.6vw, 3.5rem);
+    text-wrap: balance;
+  }
+  .kicker {
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    color: var(--color-federal);
+  }
+  .on-dark .kicker {
+    color: var(--color-signal);
+  }
+  .lead {
+    font-size: clamp(1.0625rem, 1rem + 0.35vw, 1.25rem);
+    line-height: 1.6;
+    text-wrap: pretty;
+  }
+
+  /* Buttons: step up on hover, press on click. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.4rem;
+    border-radius: 0.375rem;
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    white-space: nowrap;
+    transition:
+      transform 0.18s ease,
+      background-color 0.18s ease,
+      border-color 0.18s ease,
+      color 0.18s ease;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+  }
+  .btn:active {
+    transform: translateY(0) scale(0.985);
+  }
+  .btn svg {
+    transition: transform 0.2s ease;
+  }
+  .btn:hover svg {
+    transform: translateX(3px);
+  }
+  .btn-signal {
+    background: var(--color-signal);
+    color: var(--color-ink);
+  }
+  .btn-signal:hover {
+    background: #ffb633;
+  }
+  .btn-ink {
+    background: var(--color-ink);
+    color: #fff;
+  }
+  .btn-ink:hover {
+    background: var(--color-ink-3);
+  }
+  .btn-ghost-light {
+    border: 1px solid rgb(255 255 255 / 0.45);
+    color: #fff;
+  }
+  .btn-ghost-light:hover {
+    border-color: #fff;
+    background: rgb(255 255 255 / 0.08);
+  }
+  .btn-outline {
+    border: 1px solid var(--color-ink);
+    color: var(--color-ink);
+  }
+  .btn-outline:hover {
+    background: var(--color-ink);
+    color: #fff;
+  }
+
+  /* Text link whose underline draws in from the left. */
+  .link-draw {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    padding-bottom: 3px;
+    transition: background-size 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .link-draw:hover,
+  a:hover > .link-draw,
+  .group:hover .link-draw {
+    background-size: 100% 1.5px;
+  }
+  .link-draw svg {
+    transition: transform 0.2s ease;
+  }
+  .link-draw:hover svg,
+  .group:hover .link-draw svg {
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
